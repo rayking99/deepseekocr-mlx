@@ -2,7 +2,7 @@
 
 This script accepts a single PDF file or a directory of PDFs, renders pages to
 images, runs the MLX DeepSeek-OCR model per page (optionally in parallel),
-stores per-page artifacts (annotated image, crops, result.mmd), and writes one
+stores per-page artifacts (annotated image, crops, result.md), and writes one
 aggregated Markdown file per PDF.
 
 Usage examples:

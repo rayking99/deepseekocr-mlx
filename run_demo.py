@@ -196,7 +196,7 @@ def save_demo_outputs(image: Image.Image, raw_text: str, output_dir: Path) -> st
     annotated.save(output_dir / "result_with_boxes.jpg")
 
     markdown = _render_markdown(raw_text, detections, replacements)
-    (output_dir / "result.mmd").write_text(markdown + "\n", encoding="utf-8")
+    (output_dir / "result.md").write_text(markdown + "\n", encoding="utf-8")
 
     return markdown
 
