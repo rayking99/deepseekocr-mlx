@@ -229,7 +229,8 @@ class Block(nn.Module):
         input_size: Optional[Tuple[int, int]] = None,
     ) -> None:
         super().__init__()
-        self.norm1 = nn.LayerNorm(dim)
+        # Match the LayerNorm epsilon in DeepSeek-OCR's SAM encoder.
+        self.norm1 = nn.LayerNorm(dim, eps=1e-6)
         self.attn = Attention(
             dim,
             num_heads=num_heads,
@@ -237,7 +238,7 @@ class Block(nn.Module):
             use_rel_pos=use_rel_pos,
             input_size=input_size if window_size == 0 else (window_size, window_size),
         )
-        self.norm2 = nn.LayerNorm(dim)
+        self.norm2 = nn.LayerNorm(dim, eps=1e-6)
         self.mlp = MLPBlock(embedding_dim=dim, mlp_dim=int(dim * mlp_ratio))
         self.window_size = window_size
 
@@ -323,9 +324,9 @@ class ImageEncoderViT_MLX(nn.Module):
 
         self.neck = [
             nn.Conv2d(embed_dim, out_chans, kernel_size=1, bias=False),
-            nn.LayerNorm(out_chans),
+            nn.LayerNorm(out_chans, eps=1e-6),
             nn.Conv2d(out_chans, out_chans, kernel_size=3, padding=1, bias=False),
-            nn.LayerNorm(out_chans),
+            nn.LayerNorm(out_chans, eps=1e-6),
         ]
 
         # Two stride-2 downsamples to reach 16x16 from 64x64 (or 10x10 from 40x40)
